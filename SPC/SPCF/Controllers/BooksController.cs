@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
+using PagedList;
 using System.Net;
 using System.Web;
-using System.Web.Mvc;
-using DataBase.Entities;
 using SPCF.Models;
+using System.Linq;
+using System.Web.Mvc;
 using SPCF.ViewModels;
-using Microsoft.AspNet.Identity;
+using DataBase.Entities;
+using System.Data.Entity;
 using Microsoft.Owin.Security;
-using System.Threading.Tasks;
-using PagedList.Mvc;
-using PagedList;
-using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 
 namespace SPCF.Controllers
 {
