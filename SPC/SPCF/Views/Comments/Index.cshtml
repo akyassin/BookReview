@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DataBase.Entities.Comments>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Comments Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.BookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserProfiles.ApplicationUser.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified)
+        </th>
+        <th class="col-lg-4">
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Books.BookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserProfiles.fullName)
+        </td>
+        <td>
+            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("dd-MM-yyyy") : "No Date")
+        </td>
+        <td>
+            @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("dd-MM-yyyy") : "No Date")
+        </td>
+        <td class="col-lg-4">
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CommentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CommentID })
+        </td>
+    </tr>
+}
+
+</table>

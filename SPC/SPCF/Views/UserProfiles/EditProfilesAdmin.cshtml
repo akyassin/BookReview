@@ -1,0 +1,176 @@
+﻿@model SPCF.ViewModels.UserAspNet.EditAdmin
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Edit";
+
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("EditProfilesAdmin", "UserProfiles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UserProfiles</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => Model.ID)
+        @Html.HiddenFor(m => Model.UserProfile.ID)
+        @Html.HiddenFor(m => Model.UserProfile.Upload)
+        @Html.HiddenFor(m => Model.UserProfile.Image)
+        @Html.HiddenFor(m => Model.Password)
+        @Html.HiddenFor(m => Model.UserName)
+        @Html.HiddenFor(m => Model.Email)
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.SelectedRoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => Model.SelectedRoleId,new SelectList(Model.RolesList,"RoleId","RoleName"), new { @class = "form-control" } )
+                @Html.ValidationMessageFor(m => Model.SelectedRoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(m => Model.UserProfile.Gender, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => Model.UserProfile.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                <div style="padding-top:5px">
+                    <button class="btn btn-xs btn-default">
+                        <a href="@Url.Action("ChangePassword", "Manage")">Change Password</a>
+                    </button>
+                </div>
+
+                @Html.ValidationMessageFor(m => Model.Password, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.Email, new { htmlAttributes = new {@class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.PhoneNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.DateOfBirth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.Street, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.Street, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.UserProfile.Zip, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => Model.UserProfile.Zip, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.UserProfile.Zip, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserProfile.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-10">
+
+                    @if (Model.UserProfile.Image == null)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => Model.UserProfile.Upload, new { type = "file", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UserProfile.Upload, "", new { @class = "text-danger" })
+                                @*<input class="btn btn-link" type="submit" value="Upload" />*@
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @{string image = Convert.ToBase64String(Model.UserProfile.Image); }
+                                @{String img64Url = string.Format("data:image;" + "base64,{0}", image);}
+                                <img src="@img64Url" style="width:110px; height:150px; padding-top:10px" />
+                                <div style="margin-top:5px;">
+                                    <ul class="list-inline" style="list-style:none">
+                                        <li class="btn btn-sm"><a href="@Url.Action("DeleteImageofEditProfile", "UserProfiles", new { userId = Model.ID })">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                        <input type="submit" value="Save" class="btn btn-default" id="submit-form" />
+                    </div>
+                </div>
+            </div>
+        </div>
+ }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

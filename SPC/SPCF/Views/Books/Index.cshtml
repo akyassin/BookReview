@@ -1,0 +1,156 @@
+﻿@using PagedList;
+@using SPCF.Models;
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
+
+@model IPagedList<DataBase.Entities.Books>
+
+@{
+    var currentUserId = User.Identity.GetUserId();
+    var db = new SPContext();
+}
+
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<h3>Books Index</h3>
+<h5>@db.Books.ToList().Count() Books.</h5>
+
+
+<hr />
+@using (Html.BeginForm("Index","Books", FormMethod.Get))
+{
+
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Name", true) <text>Name</text>
+    @Html.RadioButton("searchBy", "Author") <text>Author</text>
+    @Html.RadioButton("searchBy", "Category") <text>Category</text>
+    <br />
+    <br />
+    @Html.TextBox("search", null, new { @class = "form-control", @style = "display: inline" })
+    <input type="submit" value="Search" class="btn btn-default"/>
+}
+<br />
+
+<p>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <hr />
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th style="width:110px;">
+            @Html.DisplayNameFor(model => Model.First().Image)
+        </th>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortBy = ViewBag.SortNameParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }, new { @style = "text-decoration:none; color:black" })
+        </th>
+        <th>
+            @Html.ActionLink("Author", "Index", new { sortBy = ViewBag.SortAuthorParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }, new { @style = "text-decoration:none; color:black" })
+        </th>
+        <th>
+            @Html.ActionLink("Category", "Index", new { sortBy = ViewBag.SortCategoryParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }, new { @style = "text-decoration:none; color:black" })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Modified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td style="width:110px; text-align:center">
+            @if (item.Image == null)
+            {
+                <img src="https://www.electiondataservices.com/wp-content/uploads/2014/10/sorry-image-not-available.jpg" class="img-thumbnail" style="width:140px; height:220px; padding-top:5px" />;
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    if (db.FavouriteBooks.Any(a => a.UserID == currentUserId) && db.FavouriteBooks.Any(a => a.BookID == item.BookID))
+                    {
+                        <a href='@Url.Action("RemFromoFav", "FavouriteBooks",new { Id = item.BookID })' class='fa fa-heart' style="color:darkred; font-size:18px; padding:5px; text-decoration:none"></a>
+
+                    }
+                    else
+                    {
+                        <a href='@Url.Action("AddToFav", "FavouriteBooks",new { Id = item.BookID })' class='fa fa-heart-o' style="color:darkred; font-size:18px; padding:5px; text-decoration:none"></a>
+                    }
+                }
+                else
+                {
+                    <h5 class="alert alert-warning" style="padding:5px; margin-bottom:5px ;font-size:11px">Log in! <span class="fa fa-heart"></span> </h5>
+                }
+
+            }
+            else
+            {
+                string img64 = Convert.ToBase64String(item.Image);
+                string img64Url = string.Format("data:image;" + "base64,{0}", img64);
+                <img src="@img64Url" style="width:140px; height:220px; padding-top:5px" /><br />
+
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    if (db.FavouriteBooks.Any(a => a.UserID == currentUserId) && db.FavouriteBooks.Any(a => a.BookID == item.BookID))
+                    {
+                        <a href='@Url.Action("RemFromoFav", "FavouriteBooks",new { Id = item.BookID })' class='fa fa-heart' style="color:darkred; font-size:18px; padding:5px; text-decoration:none"></a>
+
+                    }
+                    else
+                    {
+                        <a href='@Url.Action("AddToFav", "FavouriteBooks",new { Id = item.BookID })' class='fa fa-heart-o' style="color:darkred; font-size:18px; padding:5px; text-decoration:none"></a>
+
+                    }
+                }
+                else
+                {
+                    <h5 class="alert alert-warning" style="padding:5px; margin-bottom:5px ;font-size:11px">Log in! <span class="glyphicon glyphicon-heart"></span> </h5>
+                }
+
+
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Authors.fullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("yyyy-MM-dd") : "No Date")
+        </td>
+        <td>
+            @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("yyyy-MM-dd") : "No Date")
+        </td>
+
+        <td>
+            @if (User.IsInRole("Admin"))
+             {
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookID }) <span>|</span>
+             }  
+
+             @Html.ActionLink("Details", "Details", new { id = item.BookID }) 
+
+            @if (User.IsInRole("Admin"))
+            {
+                <span>| </span>@Html.ActionLink("Delete", "Delete", new { id = item.BookID })
+             }
+        </td>
+    </tr>
+}
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"], sortBy = Request.QueryString["sortBy"] }),
+                     new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })

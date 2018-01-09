@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DataBase.Entities.Authors>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Authors Index</h3>
+<h5>@(Model.Count()) Authors.</h5>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th class="col-lg-4">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.Image == null)
+            {
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="img-circle"    style="height:75px; width:75px; vertical-align: middle; float: none; display: inline-block"/>;
+            }
+            else
+            {
+                string img64 = Convert.ToBase64String(item.Image);
+                string img64Url = string.Format("data:image;" + "base64,{0}", img64);
+                <img src="@img64Url" style="width:120px; height:120px" class="img-circle img-thumbnail" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td class="col-lg-4">
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("dd/MM/yyyy") : "No Date")
+        </td>
+        <td>
+            @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("dd/MM/yyyy") : "No Date")
+        </td>
+        <td>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.AuthorID }) <span>|</span>
+            }
+
+            @Html.ActionLink("Details", "Details", new { id = item.AuthorID }) 
+
+            @if (User.IsInRole("Admin"))
+            {
+                <span>|</span> @Html.ActionLink("Delete", "Delete", new { id = item.AuthorID }) 
+            }
+        </td>
+    </tr>
+}
+
+</table>

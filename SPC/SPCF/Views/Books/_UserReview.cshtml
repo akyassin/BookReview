@@ -1,0 +1,85 @@
+﻿@model DataBase.Entities.Books
+
+@{
+    Layout = null;
+    var IsUserReviewd = ViewBag.IsUserReviewd;
+}
+
+@{
+
+    <!--Rating System for Logged in Users-->
+    if (Context.User.Identity.IsAuthenticated && IsUserReviewd == 0)
+    {
+        <p>Please rate:</p>
+
+        <div class="rating">
+            <a class="fa fa-star-o" href="@Url.Action("_UserReviewPost", "Books",new {rate = 5, Id = Model.BookID})"></a>
+            <a class="fa fa-star-o" href="@Url.Action("_UserReviewPost", "Books",new {rate = 4, Id = Model.BookID})"></a>
+            <a class="fa fa-star-o" href="@Url.Action("_UserReviewPost", "Books",new {rate = 3, Id = Model.BookID})"></a>
+            <a class="fa fa-star-o" href="@Url.Action("_UserReviewPost", "Books",new {rate = 2, Id = Model.BookID})"></a>
+            <a class="fa fa-star-o" href="@Url.Action("_UserReviewPost", "Books",new {rate = 1, Id = Model.BookID})"></a>
+
+        </div>
+    }
+    else if (Context.User.Identity.IsAuthenticated && IsUserReviewd != 0)
+    {
+        <p>Your rate:</p>
+
+        if (IsUserReviewd > 0 && IsUserReviewd < 1.5)
+        {
+            <div class="stars">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+        }
+        else if (IsUserReviewd >= 1.5 && IsUserReviewd < 2.5)
+        {
+            <div class="stars">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+        }
+        else if (IsUserReviewd >= 2.5 && IsUserReviewd < 3.5)
+        {
+            <div class="stars">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+        }
+        else if (IsUserReviewd >= 3.5 && IsUserReviewd < 4.5)
+        {
+            <div class="stars">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+            </div>
+        }
+        else if (IsUserReviewd >= 4.5)
+        {
+            <div class="stars">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+        }
+        @Html.ActionLink("Edit", "DeleteReview", "Books", new { BookId = Model.BookID },null)
+
+    }
+    else if (IsUserReviewd == 0)
+    {
+        <p class="alert-danger" style="margin-top:10px"><b>Logg In to Review!</b></p>
+    }
+}

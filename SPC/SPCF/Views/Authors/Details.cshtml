@@ -1,0 +1,61 @@
+﻿@model SPCF.ViewModels.Author.Details
+@{ var lastBookId = TempData["LastBookId"] as int?; }
+
+
+<h2>Details</h2>
+
+<div>
+    <h4>Authors</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Describtion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describtion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @if (Model.Image == null)
+            {
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="img-circle" style="height:75px; width:75px; vertical-align: middle; float: none; display: inline-block" />;
+            }
+            else
+            {
+                string img64Url = string.Format("data:image;" + "base64,{0}", Model.Image);
+                <img src="@img64Url" style="width:100px; height:150px; padding-top:10px" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span>
+    }
+
+    @if (lastBookId != null)
+    {
+        @Html.ActionLink("Back to List", "Details", "Books", new { Id = lastBookId }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Back", "Index")
+    }
+
+
+</p>

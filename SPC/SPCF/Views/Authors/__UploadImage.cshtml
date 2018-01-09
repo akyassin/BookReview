@@ -1,0 +1,17 @@
+﻿@model SPCF.ViewModels.Author.Edit
+
+@using (Html.BeginForm("_UploadImage", "Authors", new { AuthorId = Model.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => Model.Upload, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Upload, "", new { @class = "text-danger" })
+                <input class="btn btn-link" type="submit" value="Upload" />
+            </div>
+        </div>
+    </div>
+}

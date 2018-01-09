@@ -1,0 +1,125 @@
+﻿@model SPCF.ViewModels.Book.Details
+@using Microsoft.AspNet.Identity;
+@using SPCF.Models;
+@{
+    var currentUserId = User.Identity.GetUserId();
+    var db = new SPContext();
+}
+
+@{
+    ViewBag.Title = "Details";
+    var user = HttpContext.Current.User.Identity.Name.ToString();
+}
+
+<h2>Details</h2>
+<hr />
+
+<div class="container"style="margin-bottom:25px">
+    <div class="row">
+        <!--Book Image and FavBook-->
+        <div class="col-lg-2" style="padding-right:25px; text-align:center">
+            @if (Model.Image == null)
+            {
+                <p>No image Uploaded!s</p>
+
+            }
+            else
+            {
+                String img64Url = string.Format("data:image;" + "base64,{0}", Model.Image);
+                <img src="@img64Url" class="img-responsive img-thumbnail" />
+            }
+
+            <!--Add and Remove Book from Favourite List -->
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+            if (db.FavouriteBooks.Any(a => a.UserID == currentUserId) && db.FavouriteBooks.Any(a => a.BookID == Model.Id))
+            {
+            <a href='@Url.Action("RemFromoFavDetails", "FavouriteBooks",new { Id = Model.Id })' class='glyphicon glyphicon-heart' style="color:darkred; font-size:20px; padding:5px; text-decoration:none; text-align:center"></a>
+
+            }
+            else
+            {
+            <a href='@Url.Action("AddToFavDetails", "FavouriteBooks",new { Id = Model.Id })' class='glyphicon glyphicon-heart-empty' style="color:darkred; font-size:20px; padding:5px; text-decoration:none; text-align:center"></a>
+
+            }
+            }
+            else
+            {
+            <h5 class="alert alert-danger" style="padding:5px; font-size:12px">Login to add Favourite!</h5>
+            }
+
+        </div>
+        <div class="col-lg-9">
+            <!--Book Name-->
+            <h2 style="padding-top:0px; margin-top:0px; margin-bottom:5px">@Html.DisplayFor(model => model.Name)</h2>
+            <!--Author and Category-->
+            <p style="font-size:14px; text-transform: uppercase">By @Html.ActionLink(Model.Author.AuthorName, "Details", "Authors", 
+                                                                   new { id = Model.Author.AuthorID }, new { @Style = "margin-top:0; padding-top:0; text-decoration: none" }) 
+            And From @Model.Category.Name Category</p>
+            <!--Description-->
+            <p style="font-size:20px; font-family:'Adobe Devanagari'; padding-top:12px">@Model.Discription</p>
+        </div>
+    </div>
+</div>
+
+<div>
+    @if (Model.Comments != null)
+    {
+        <div class="container">
+            <table class="table table-hover table-striped" align="left">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments.FirstOrDefault().UserName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments.FirstOrDefault().Comment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments.FirstOrDefault().Created)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Comments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Comment)
+                        </td>
+                        <td>
+                            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("yyyy-MM-dd") : "No Date")
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+</div>
+<div>
+    <hr />
+    
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+           Html.RenderAction("_AddComment", "Books", new { id = Model.Id }); 
+        }
+        else
+        {
+            <div class="container">
+                <h5 class="alert alert-warning" style="padding:10px">Login to be able to add a comment!</h5>
+            </div>
+        }
+
+    <hr />
+</div>
+
+    <p>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>| </span>
+
+        }
+        @Html.ActionLink("Back", "Index","Home")
+    </p>

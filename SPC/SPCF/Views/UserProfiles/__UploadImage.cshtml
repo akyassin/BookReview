@@ -1,0 +1,17 @@
+﻿@model SPCF.ViewModels.UserAspNet.Edit
+
+@using (Html.BeginForm("_UploadImage", "UserProfiles", new { userId = Model.UserProfile.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => Model.UserProfile.Image, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserProfile.Image, "", new { @class = "text-danger" })
+                <input class="btn btn-link" type="submit" value="Upload" />
+            </div>
+        </div>
+    </div>
+}

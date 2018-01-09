@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DataBase.Entities.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categories Index</h2>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modified)
+            </th>
+        }
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("dd-mm-yyyy") : "No Date")
+            </td>
+            <td>
+                @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("dd-mm-yyyy") : "No Date")
+            </td>
+        }
+        <td>
+            @if (User.IsInRole("Admin"))
+             {
+                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) <span>| </span> 
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })
+             }
+        </td>
+    </tr>
+}
+
+</table>

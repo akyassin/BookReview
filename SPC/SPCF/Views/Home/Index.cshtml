@@ -1,0 +1,142 @@
+﻿@model IEnumerable<DataBase.Entities.Books> 
+
+@using Microsoft.AspNet.Identity;
+@using SPCF.Models;
+@{
+    var book1 = Model.ElementAt(0);
+    var book2 = Model.ElementAt(1);
+    var book3 = Model.ElementAt(2);
+    var book4 = Model.ElementAt(3);
+    var book5 = Model.ElementAt(4);
+    var book6 = Model.ElementAt(5);
+    var book7 = Model.ElementAt(6);
+
+}
+
+<div class="jumbotron" style="padding:25px">
+    <div class="container" style="margin-bottom:25px">
+        <div class="row">
+            <!--Book Image and FavBook-->
+            <div class="col-lg-4" style="text-align:center; padding-top:15px">
+                @if (book1.Image == null)
+                {
+                    
+                    <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book1.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:300px; height:450px" alt="There is no image for this book! And The Book Name is : @book1.BookName" /></a>
+
+                }
+                else
+                {
+                    var img64Url1 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book1.Image));
+                    <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book1.BookID})"><img src="@img64Url1" class="img-responsive img-thumbnail" style="width:280px; height:430px" title="@book1.BookName"/></a>
+                    
+                }
+
+            </div>
+            <div class="col-lg-8" style="padding-top:15px">
+                <!--Book Name-->
+                <h2 style="padding-top:0px; margin-top:0px; margin-bottom:5px">@Html.DisplayFor(model => book1.BookName)</h2>
+                <!--Author and Category-->
+                <p style="font-size:14px; text-transform: uppercase">
+                    By @book1.Authors.fullName And From @book1.Category.CategoryName Category
+                </p>
+                <!--Description-->
+                <p style="font-size:20px; font-family:'Adobe Devanagari'; padding-top:12px">@book1.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="jumbotron" style="background-color:transparent; padding:25px; padding-top:0">
+    <div class="row" style="text-align:center; align-content:center">
+        <!--Book no.1-->
+        <div class="col-md-2">
+            @if (book2.Image == null)
+            {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book2.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book2.BookName" title="@book2.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book2.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book2.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book2.BookName" /></a>
+
+            }
+        </div>
+        <!--Book no.2-->
+        <div class="col-lg-2">
+            @if (book3.Image == null)
+            {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book3.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book3.BookName" title="@book3.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book3.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book3.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book3.BookName" title="@book3.BookName" /></a>
+            }
+        </div>
+        <!--Book no.3-->
+        <div class="col-lg-2">
+            @if (book4.Image == null)
+            {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book4.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book4.BookName" title="@book4.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book4.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book4.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book4.BookName" /></a>
+            }
+        </div>
+        <!--Book no.4-->
+        <div class="col-lg-2">
+            @if (book5.Image == null)
+            {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book5.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book5.BookName" title="@book5.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book5.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book5.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book5.BookName" /></a>
+            }
+        </div>
+        <!--Book no.5-->
+        <div class="col-lg-2">
+            @if (book6.Image == null)
+            {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book6.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book6.BookName" title="@book6.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book6.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book6.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book6.BookName" /></a>
+
+            }
+        </div>
+        <!--Book no.6-->
+        <div class="col-lg-2">
+            @if (book7.Image == null)
+                {
+
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book7.BookID})"><img src="#" class="img-responsive img-thumbnail" style="width:160px; height:230px" alt="There is no image for this book! And The Book Name is : @book7.BookName" title="@book7.BookName" /></a>
+
+            }
+            else
+            {
+                var img64Url2 = string.Format("data:image;" + "base64,{0}", Convert.ToBase64String(book7.Image));
+                <a href="@Url.Action("DetailsBackToHome","Books",new { Id = book7.BookID})"><img src="@img64Url2" class="img-responsive img-thumbnail" style="width:160px; height:230px" title="@book7.BookName" /></a>
+
+            }
+        </div>
+
+    </div>
+</div>  

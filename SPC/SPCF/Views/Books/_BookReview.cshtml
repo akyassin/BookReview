@@ -1,0 +1,72 @@
+﻿@model DataBase.Entities.Rates
+
+@{
+
+    Layout = null;
+    var ratesAvg = ViewBag.ratesAvg;
+
+}   
+
+@{ 
+
+    if (Model == null)
+    {
+        <p class="alert-danger"><b>No Reviews!</b></p>
+    }
+    else
+    {
+    <!--The Total Rating Of The Book-->
+    <p>The total rate:</p>
+    if (ratesAvg > 0 && ratesAvg < 1.5)
+    {
+        <div class="stars">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+        </div>
+    }
+    else if (ratesAvg >= 1.5 && ratesAvg < 2.5)
+    {
+        <div class="stars">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+        </div>
+    }
+    else if (ratesAvg >= 2.5 && ratesAvg < 3.5)
+    {
+        <div class="stars">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star-o"></span>
+            <span class="fa fa-star-o"></span>
+        </div>
+    }
+    else if (ratesAvg >= 3.5 && ratesAvg < 4.5)
+    {
+        <div class="stars">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star-o"></span>
+        </div>
+    }
+    else if (ratesAvg >= 4.5)
+    {
+        <div class="stars">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        </div>
+    } 
+	}
+
+}

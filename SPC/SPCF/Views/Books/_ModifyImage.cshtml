@@ -1,0 +1,24 @@
+﻿@model SPCF.ViewModels.Book.Edit
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @{String img64Url = string.Format("data:image;" + "base64,{0}", Model.Image);}
+
+                <img src="@img64Url" style="width:110px; height:150px; padding-top:10px" />
+
+                <div style="margin-top:5px;">
+                    <ul class="list-inline" style="list-style:none">
+                        <li class="btn btn-sm"><a href="@Url.Action("DeleteImage", "Books", new { BookId = Model.Id })">Delete</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

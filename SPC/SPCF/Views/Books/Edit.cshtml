@@ -1,0 +1,91 @@
+﻿@model SPCF.ViewModels.Book.Edit
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Books</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Image)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Discription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Discription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Discription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedAuthorId, "AuthorID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedAuthorId, new SelectList(Model.Authors, "AuthorID", "AuthorName"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedAuthorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedCategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedCategoryId, new SelectList(Model.Categoties, "Id", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedCategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @if (Model.Image == null)
+                {
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => Model.Upload, new { type = "file", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Upload, "", new { @class = "text-danger" })
+                </div>
+            }
+            else
+            {
+                <div class="col-md-10">
+                    @*@{var base64 = Convert.ToBase64String(Model.Image);}*@
+                    @{String img64Url = string.Format("data:image;" + "base64,{0}", Model.Image);}
+
+                    <img src="@img64Url" style="width:110px; height:150px; padding-top:10px" />
+
+                    <div style="margin-top:5px;">
+                        <ul class="list-inline" style="list-style:none">
+                            <li class="btn btn-sm"><a href="@Url.Action("DeleteImage", "Books", new { BookId = Model.Id })">Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-offset-0"><input type="submit" value="Save" class="btn btn-default" /></div>
+
+    </div>
+ }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

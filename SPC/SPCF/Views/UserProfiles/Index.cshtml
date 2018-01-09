@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DataBase.Entities.UserProfiles>
+
+@{
+    ViewBag.Title = "Users Index";
+}
+
+<h2>Users Index</h2>
+<div style="padding-bottom:10px">
+    <p>
+        @Html.ActionLink("Create New", "Create" )
+    </p>
+</div><table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fullName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.Image == null)
+            {
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" class="img-circle" style="height:75px; width:75px"/>
+
+            }
+            else
+            {
+                string img64 = Convert.ToBase64String(item.Image);
+                string img64Url = string.Format("data:image;" + "base64,{0}", img64);
+                <img src="@img64Url" class="img-circle" style="height:75px; width:75px;"/> 
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("yyyy/MM/dd") : "No Date")
+        </td>
+        <td>
+            @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("yyyy/MM/dd") : "No Date")
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditProfilesAdmin", new { id=item.UserID }) |
+            @Html.ActionLink("Delete","Delete", new { id = item.UserID })
+        </td>
+    </tr>
+}
+
+</table>
+
+

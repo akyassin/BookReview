@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DataBase.Entities.FavouriteBooks>
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserProfiles.fullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books.BookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserProfiles.fullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Books.BookName)
+        </td>
+        <td>
+            @(item.Created.HasValue ? new DateTime(item.Created.Value).ToString("yyyy-MM-dd") : "No Date")
+        </td>
+        <td>
+            @(item.Modified.HasValue ? new DateTime(item.Modified.Value).ToString("yyyy-MM-dd") : "No Date")
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FavouriteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FavouriteID })
+        </td>
+    </tr>
+}
+
+</table>
